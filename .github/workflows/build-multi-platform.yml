@@ -44,10 +44,6 @@ jobs:
             ${{github.workspace}}/zlib
         key: ${{ runner.os }}-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }} 
     
-    - name: Update git submodules
-      if:  runner.os == 'Linux' 
-      run:  git submodule update --init --recursive   
-    
     - name:  Install Ubuntu  Packages
       if: runner.os == 'Linux'    
       shell: bash

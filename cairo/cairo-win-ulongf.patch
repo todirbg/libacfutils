@@ -1,5 +1,5 @@
---- cairo-1.18.0/util/cairo-script/cairo-script-operators.c
-+++ cairo-1.18.0-new/util/cairo-script/cairo-script-operators.c
+--- cairo-1.17.6/util/cairo-script/cairo-script-operators.c
++++ cairo-1.17.6-new/util/cairo-script/cairo-script-operators.c
 @@ -55,9 +55,9 @@
  #include <limits.h> /* INT_MAX */
  #include <assert.h>

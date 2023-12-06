@@ -1,6 +1,15 @@
---- cairo-1.18.0/src/cairoint.h
-+++ cairo-1.18.0-new/src/cairoint.h
-@@ -55,7 +55,7 @@
+--- cairo-1.17.6/src/cairoint.h
++++ cairo-1.17.6-new/src/cairoint.h
+@@ -49,7 +49,7 @@
+ #include "config.h"
+ #endif
+ 
+-#ifdef _MSC_VER
++#if	defined(_MSC_VER) || defined(_WIN32)
+ #define cairo_public __declspec(dllexport)
+ #endif
+ 
+@@ -58,7 +58,7 @@
  #include <stdarg.h>
  #include <stddef.h>
  
