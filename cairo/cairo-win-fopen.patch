@@ -1,6 +1,6 @@
---- cairo-1.16.0/src/cairo-misc.c	2018-08-17 03:10:53.000000000 +0200
-+++ cairo-1.16.0-new/src/cairo-misc.c	2018-12-23 21:28:50.992025062 +0100
-@@ -904,7 +904,7 @@
+--- cairo-1.18.0/src/cairo-misc.c
++++ cairo-1.18.0-new/src/cairo-misc.c
+@@ -933,7 +933,7 @@
  _cairo_fopen (const char *filename, const char *mode, FILE **file_out)
  {
      FILE *result;

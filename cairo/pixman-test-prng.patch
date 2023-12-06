@@ -1,6 +1,6 @@
---- pixman-0.34.0/test/Makefile.in	2016-01-31 15:31:06.000000000 +0100
-+++ new/test/Makefile.in	2017-09-30 16:46:59.000000000 +0200
-@@ -283,7 +283,7 @@
+--- pixman-0.42.2/test/Makefile.in
++++ new/test/Makefile.in
+@@ -289,7 +289,7 @@
  	$(top_builddir)/pixman/libpixman-1.la $(am__DEPENDENCIES_1) \
  	$(am__DEPENDENCIES_1)
  region_test_SOURCES = region-test.c
@@ -9,7 +9,7 @@
  region_test_LDADD = $(LDADD)
  region_test_DEPENDENCIES = libutils.la \
  	$(top_builddir)/pixman/libpixman-1.la $(am__DEPENDENCIES_1) \
-@@ -313,7 +313,7 @@
+@@ -319,7 +319,7 @@
  	$(top_builddir)/pixman/libpixman-1.la $(am__DEPENDENCIES_1) \
  	$(am__DEPENDENCIES_1)
  scaling_helpers_test_SOURCES = scaling-helpers-test.c
