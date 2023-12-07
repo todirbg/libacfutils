@@ -296,13 +296,13 @@ exists("../cairo/cairo-$$PLAT_LONG/lib/libcairo.a") : exists("$$GLEWMX_LIB") {
 	    ../src/acfutils/mt_cairo_render.h \
 	    ../src/acfutils/widget.h
 	SOURCES += \
-	    ../src/mt_cairo_render.c
+	    ../src/mt_cairo_render.c \
 	    ../src/widget.c
 }
 
-exists("lzma/qmake/$$PLAT_LONG/liblzma.a") {
+exists("../lzma/qmake/$$PLAT_LONG/liblzma.a") {
 	HEADERS += ../src/acfutils/dsf.h
-	HEADERS += ../src/dsf.c
+	SOURCES += ../src/dsf.c
 }
 
 # Optional lib components when building a non-minimal library
@@ -340,7 +340,6 @@ contains(minimal, 1) {
 	    ../src/minimp3.c \
 	    ../src/odb.c \
 	    ../src/paste.c \
-	    ../src/png.c \
 	    ../src/riff.c \
 	    ../src/shader.c \
 	    ../src/wav.c
