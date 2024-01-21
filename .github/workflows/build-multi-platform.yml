@@ -4,32 +4,32 @@ on:
   workflow_dispatch
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      # Set fail-fast to false to ensure that feedback is delivered for all matrix combinations. Consider changing this to true when your workflow is stable.
-      fail-fast: false
-
-      matrix:
-        os: [ubuntu-20.04, macos-12]
-
-    steps:
+  build_macos:
+    runs-on: macos-12
+    
+    steps:    
     - uses: actions/checkout@v3
     
+    - name: Build
+      shell: bash
+      run:  |
+              ./build_deps
+              ./build_redist
+  build_ubuntu:
+    runs-on: ubuntu-20.04
+    
+    steps:    
     - name:  Restore cached build 
       uses: actions/cache/restore@v3
       id: restore_cache
       with:
         path: ${{github.workspace}}/
-        key: ${{ runner.os }}-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }} 
+        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }} 
     
     - name: Update git submodules
-      if:  runner.os == 'Linux' 
       run:  git submodule update --init --recursive   
     
     - name:  Install Ubuntu  Packages
-      if: runner.os == 'Linux'    
       shell: bash
       run: ./install-ubuntu-packages
   
@@ -38,7 +38,7 @@ jobs:
       run:  |
               ./build_deps
               ./build_redist
- 
+                
     - name:  Save build cache
       uses: actions/cache/save@v3
       id: save_cache
@@ -46,10 +46,7 @@ jobs:
         path: ${{github.workspace}}/
         key:  ${{ steps.restore_cache.outputs.cache-primary-key }}
 
-    - name: Zip artifact for deployment
-      run: zip libacfutils.zip ./* -r
-
     - uses: actions/upload-artifact@v3
       with:
-        name: libacfutils-full
-        path: libacfutils.zip
+        name: libacfutils
+        path: ./
