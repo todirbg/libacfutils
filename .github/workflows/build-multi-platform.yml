@@ -46,7 +46,10 @@ jobs:
         path: ${{github.workspace}}/
         key:  ${{ steps.restore_cache.outputs.cache-primary-key }}
 
+    - name: Zip artifact for deployment
+      run: zip libacfutils.zip ./* -r
+
     - uses: actions/upload-artifact@v3
       with:
         name: libacfutils-full
-        path: ${{github.workspace}}/
+        path: libacfutils.zip
