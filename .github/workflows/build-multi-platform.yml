@@ -15,7 +15,9 @@ jobs:
       with:
         path: ./*
         key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
-        restore-keys: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}
+        restore-keys: |
+          cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-
+          cache-
         enableCrossOsArchive: true
     
     - name: Update git submodules
@@ -44,7 +46,9 @@ jobs:
       with:
         path: ./*
         key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
-        restore-keys: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}
+        restore-keys: |
+          cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-
+          cache-
         enableCrossOsArchive: true  
 
     - name: Build
@@ -66,7 +70,9 @@ jobs:
       with:
         path: ./*
         key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
-        restore-keys: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}
+        restore-keys: |
+          cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-
+          cache-
         enableCrossOsArchive: true  
     - name: Zip artifact for deployment
       run: zip -r libacfutils.zip ./* 
