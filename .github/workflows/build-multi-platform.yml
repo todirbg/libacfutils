@@ -29,30 +29,56 @@ jobs:
       run:  |
               ./build_deps
               ./build_redist
-  build_macos:
-    needs:
-      - build_ubuntu
-    runs-on: macos-12
-    
-    steps:    
-    - name: Build
-      shell: bash
-      run:  |
-              ./build_deps
-              ./build_redist
-  finish:
-    needs:
-      - build_ubuntu
-      - build_macos
-    runs-on: ubuntu-20.04
-    steps:
-    
+              
     - name:  Save build cache
       uses: actions/cache/save@v3
       id: save_cache
       with:
         path: ${{github.workspace}}/
         key:  ${{ steps.restore_cache.outputs.cache-primary-key }}
+        
+  build_macos:
+    needs:
+      - build_ubuntu
+    runs-on: macos-12
+    
+    steps:    
+    - uses: actions/checkout@v3 
+    
+    - name:  Restore cached build 
+      uses: actions/cache/restore@v3
+      id: restore_cache
+      with:
+        path: ${{github.workspace}}/
+        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}     
+
+    - name: Build
+      shell: bash
+      run:  |
+              ./build_deps
+              ./build_redist
+              
+    - name:  Save build cache
+      uses: actions/cache/save@v3
+      id: save_cache
+      with:
+        path: ${{github.workspace}}/
+        key:  ${{ steps.restore_cache.outputs.cache-primary-key }}
+        
+  finish:
+    needs:
+      - build_ubuntu
+      - build_macos
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v3 
+    
+    - name:  Restore cached build 
+      uses: actions/cache/restore@v3
+      id: restore_cache
+      with:
+        path: ${{github.workspace}}/
+        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}         
 
     - uses: actions/upload-artifact@v3
       with:
