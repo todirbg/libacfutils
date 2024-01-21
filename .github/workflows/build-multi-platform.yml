@@ -14,9 +14,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ./*
-        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
+        key: cache-${{ github.run_id }}-${{ runner.os }} 
         restore-keys: |
-          cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-
+          cache-${{ github.run_id }}-
           cache-
         enableCrossOsArchive: true
     
@@ -45,9 +45,9 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ./*
-        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
+        key: cache-${{ github.run_id }}-${{ runner.os }} 
         restore-keys: |
-          cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-
+          cache-${{ github.run_id }}-
           cache-
         enableCrossOsArchive: true  
 
@@ -69,9 +69,7 @@ jobs:
       uses: actions/cache@v3
       with:
         path: ./*
-        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
         restore-keys: |
-          cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-
           cache-
         enableCrossOsArchive: true  
     - name: Zip artifact for deployment
