@@ -79,8 +79,9 @@ jobs:
       with:
         path: ${{github.workspace}}/
         key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}         
-
+    - name: Zip artifact for deployment
+      run: zip -r libacfutils.zip ./* 
     - uses: actions/upload-artifact@v3
       with:
-        name: libacfutils
-        path: ./
+        name: libacfutils-full
+        path: libacfutils.zip    
