@@ -11,11 +11,12 @@ jobs:
     - uses: actions/checkout@v3   
     
     - name:  Restore cached build 
-      uses: actions/cache/restore@v3
-      id: restore_cache
+      uses: actions/cache@v3
       with:
-        path: ${{github.workspace}}/
-        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }} 
+        path: ./*
+        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
+        restorekeys: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}
+        enableCrossOsArchive: true
     
     - name: Update git submodules
       run:  git submodule update --init --recursive   
@@ -29,13 +30,6 @@ jobs:
       run:  |
               ./build_deps
               ./build_redist
-              
-    - name:  Save build cache
-      uses: actions/cache/save@v3
-      id: save_cache
-      with:
-        path: ${{github.workspace}}/
-        key:  ${{ steps.restore_cache.outputs.cache-primary-key }}
         
   build_macos:
     needs:
@@ -46,24 +40,18 @@ jobs:
     - uses: actions/checkout@v3 
     
     - name:  Restore cached build 
-      uses: actions/cache/restore@v3
-      id: restore_cache
+      uses: actions/cache@v3
       with:
-        path: ${{github.workspace}}/
-        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}     
+        path: ./*
+        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
+        restorekeys: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}
+        enableCrossOsArchive: true  
 
     - name: Build
       shell: bash
       run:  |
               ./build_deps
               ./build_redist
-              
-    - name:  Save build cache
-      uses: actions/cache/save@v3
-      id: save_cache
-      with:
-        path: ${{github.workspace}}/
-        key:  ${{ steps.restore_cache.outputs.cache-primary-key }}
         
   finish:
     needs:
@@ -74,11 +62,12 @@ jobs:
     - uses: actions/checkout@v3 
     
     - name:  Restore cached build 
-      uses: actions/cache/restore@v3
-      id: restore_cache
+      uses: actions/cache@v3
       with:
-        path: ${{github.workspace}}/
-        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}         
+        path: ./*
+        key: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}-${{ github.run_id }} 
+        restorekeys: cache-${{ hashFiles('**/*.tar.*', 'lzma/DOC/*.txt' ) }}
+        enableCrossOsArchive: true  
     - name: Zip artifact for deployment
       run: zip -r libacfutils.zip ./* 
     - uses: actions/upload-artifact@v3
