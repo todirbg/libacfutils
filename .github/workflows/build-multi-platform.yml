@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:    
+    - uses: actions/checkout@v3   
+    
     - name:  Restore cached build 
       uses: actions/cache/restore@v3
       id: restore_cache
@@ -38,7 +40,13 @@ jobs:
       run:  |
               ./build_deps
               ./build_redist
-                
+  finish:
+    needs:
+      - build_ubuntu
+      - build_macos
+    runs-on: ubuntu-20.04
+    steps:
+    
     - name:  Save build cache
       uses: actions/cache/save@v3
       id: save_cache
