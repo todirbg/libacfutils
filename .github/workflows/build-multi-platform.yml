@@ -10,7 +10,7 @@ jobs:
     steps:    
     - uses: actions/checkout@v3   
     
-    - name:  Restore cached build 
+    - name:  Cache
       uses: actions/cache@v3
       with:
         path: ./*
@@ -41,7 +41,7 @@ jobs:
     steps:    
     - uses: actions/checkout@v3 
     
-    - name:  Restore cached build 
+    - name:  Cache 
       uses: actions/cache@v3
       with:
         path: ./*
@@ -66,9 +66,10 @@ jobs:
     - uses: actions/checkout@v3 
     
     - name:  Restore cached build 
-      uses: actions/cache@v3
+      uses: actions/cache/restore@v3
       with:
         path: ./*
+        key: unused
         restore-keys: |
           cache-
         enableCrossOsArchive: true  
