@@ -8,16 +8,16 @@ jobs:
     runs-on: ubuntu-20.04
     
     steps:    
-    - uses: actions/checkout@v3   
+    - uses: actions/checkout@v4  
     
     - name:  Cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ./*
-        key: cache-${{ github.run_id }}-${{ runner.os }} 
+        key: cache-${{ runner.os }}-${{ github.run_id }} 
         restore-keys: |
-          cache-${{ github.run_id }}-
-          cache-
+          cache-${{ runner.os }}-${{ github.run_id }}
+          cache-${{ runner.os }}-
         enableCrossOsArchive: true
     
     - name: Update git submodules
@@ -39,16 +39,16 @@ jobs:
     runs-on: macos-12
     
     steps:    
-    - uses: actions/checkout@v3 
+    - uses: actions/checkout@v4
     
     - name:  Cache 
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ./*
-        key: cache-${{ github.run_id }}-${{ runner.os }} 
+        key: cache-${{ runner.os }} -${{ github.run_id }}
         restore-keys: |
-          cache-${{ github.run_id }}-
-          cache-
+          cache-${{ runner.os }}-${{ github.run_id }}
+          cache-${{ runner.os }}-
         enableCrossOsArchive: true  
 
     - name: Build
@@ -63,10 +63,10 @@ jobs:
       - build_macos
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v3 
+    - uses: actions/checkout@v4
     
     - name:  Restore cached build 
-      uses: actions/cache/restore@v3
+      uses: actions/cache/restore@v4
       with:
         path: ./*
         key: unused
@@ -75,7 +75,7 @@ jobs:
         enableCrossOsArchive: true  
     - name: Zip artifact for deployment
       run: zip -r libacfutils.zip ./* 
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         name: libacfutils-full
         path: libacfutils.zip    
