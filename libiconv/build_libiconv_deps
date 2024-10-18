@@ -17,7 +17,7 @@
 
 source ../build_dep.common
 
-LIBICONV="libiconv-1.16.tar.bz2"
+LIBICONV="libiconv-1.17.tar.bz2"
 LIBICONV_PRODUCT="lib/libiconv.a"
 LIBICONV_CONFOPTS_COMMON="--enable-static --disable-shared"
 

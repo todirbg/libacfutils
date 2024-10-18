@@ -38,16 +38,24 @@ GLEWMX=1
 WHOLE_ARCH_ON=""
 WHOLE_ARCH_OFF=""
 LINK_ACFUTILS=1
-OPENAL_VERSION="1.21.0"
+OPENAL_VERSION="1.23.1"
 
 cd "$(dirname "$0")"
 
 ARCH="$1"
-shift
 
-if ! [ -f "openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib/pkgconfig/openal.pc" ] &&
-    [ -f "openal-soft/openal-soft-1.19.1-$ARCH/build/install/lib/pkgconfig/openal.pc" ]; then
-	OPENAL_VERSION="1.19.1"
+shift
+if [[ "$ARCH" == "linux-64" ]]; then
+	if ! [ -f "openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib64/pkgconfig/openal.pc" ] &&
+		[ -f "openal-soft/openal-soft-1.19.1-$ARCH/build/install/lib/pkgconfig/openal.pc" ]; then
+		OPENAL_VERSION="1.19.1"
+		
+	fi
+else
+	if ! [ -f "openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib/pkgconfig/openal.pc" ] &&
+		[ -f "openal-soft/openal-soft-1.19.1-$ARCH/build/install/lib/pkgconfig/openal.pc" ]; then
+		OPENAL_VERSION="1.19.1"
+	fi
 fi
 
 # The order of arguments we pass to pkg-config is important. We must list
@@ -61,9 +69,16 @@ while [[ $# -gt 0 ]]; do
 		fi
 		;;
 	--static-openal)
-		if [ -f "openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib/pkgconfig/openal.pc" ]; then
-			PACKAGES="$PACKAGES opusfile opus ogg openal"
-			STATIC_OPENAL=1
+		if [[ "$ARCH" == "linux-64" ]]; then
+			if [ -f "openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib64/pkgconfig/openal.pc" ]; then
+				PACKAGES="$PACKAGES opusfile opus ogg openal"
+				STATIC_OPENAL=1
+			fi
+		else
+			if [ -f "openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib/pkgconfig/openal.pc" ]; then
+				PACKAGES="$PACKAGES opusfile opus ogg openal"
+				STATIC_OPENAL=1
+			fi
 		fi
 		;;
 	--glfw)
@@ -169,14 +184,12 @@ $(pwd)/libpng/libpng-$ARCH/lib/pkgconfig:\
 $(pwd)/zlib/zlib-$ARCH/lib/pkgconfig:\
 $(pwd)/cairo/cairo-$ARCH/lib/pkgconfig:\
 $(pwd)/cairo/pixman-$ARCH/lib/pkgconfig:\
-$(pwd)/curl/libcurl-$ARCH/lib/pkgconfig:\
 $(pwd)/shapelib/libproj-$ARCH/lib/pkgconfig:\
 $(pwd)/shapelib/libshape-$ARCH/lib/pkgconfig:\
 $(pwd)/ssl/openssl-$ARCH/lib/pkgconfig:\
 $(pwd)/ocr/liblept-$ARCH/lib/pkgconfig:\
 $(pwd)/ocr/tesseract-$ARCH/lib/pkgconfig:\
 $(pwd)/libxml2/libxml2-$ARCH/lib/pkgconfig:\
-$(pwd)/openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib/pkgconfig:\
 $(pwd)/pcre2/pcre2-$ARCH/lib/pkgconfig:\
 $(pwd)/glfw/glfw-$ARCH/install/lib/pkgconfig:\
 $(pwd)/geographiclib/geographiclib-$ARCH/cmake"
@@ -184,13 +197,17 @@ $(pwd)/geographiclib/geographiclib-$ARCH/cmake"
 if [[ "$ARCH" == "linux-64" ]]; then
 	PKG_CONFIG_PATH="$PKG_CONFIG_PATH:\
 $(pwd)/glew/glew-1.13.0-$ARCH/install/lib64/pkgconfig:\
+$(pwd)/openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib64/pkgconfig/:\
+$(pwd)/curl/libcurl-$ARCH/lib64/pkgconfig:\
 $(pwd)/libclipboard/libclipboard-$ARCH/install/lib/pkgconfig"
 	if [ -z "$NO_LIBCLIPBOARD" ]; then
 		PACKAGES="$PACKAGES libclipboard"
 	fi
 else
 	PKG_CONFIG_PATH="$PKG_CONFIG_PATH:\
-$(pwd)/glew/glew-1.13.0-$ARCH/install/lib/pkgconfig"
+$(pwd)/glew/glew-1.13.0-$ARCH/install/lib/pkgconfig":\
+$(pwd)/openal-soft/openal-soft-$OPENAL_VERSION-$ARCH/build/install/lib/pkgconfig:\
+$(pwd)/curl/libcurl-$ARCH/lib/pkgconfig
 fi
 
 export PKG_CONFIG_PATH
@@ -244,7 +261,7 @@ elif [[ "$1" = "--libs" ]]; then
 fi
 
 echo $WHOLE_ARCH_ON ${ACFUTILS_EXTRA} ${LZMA} ${LIBICONV} \
-    $(pkg-config $@ $PACKAGES) \
+    $(pkgconf $@ $PACKAGES) \
     $EXTRA $WHOLE_ARCH_OFF \
     $OPENSSL_EXTRA $DBGEXTRA ${CGLM_EXTRA} ${PCRE2_EXTRA} ${OPENAL_EXTRA} \
     ${GLEW_EXTRA} ${STACKPROT_EXTRA} ${WINBCRYPT_EXTRA} ${WINMM_EXTRA}

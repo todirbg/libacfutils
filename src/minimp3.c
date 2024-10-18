@@ -2641,7 +2641,7 @@ retry:
 ////////////////////////////////////////////////////////////////////////////////
 
 mp3_decoder_t mp3_create(void) {
-    void *dec = libc_calloc(sizeof(mp3_context_t), 1);
+    void *dec = libc_calloc(1, sizeof(mp3_context_t));
     if (dec) mp3_decode_init((mp3_context_t*) dec);
     return (mp3_decoder_t) dec;
 }

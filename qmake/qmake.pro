@@ -23,7 +23,7 @@ QMAKE_APPLE_DEVICE_ARCHS = x86_64 arm64
 CONFIG += warn_on plugin debug
 CONFIG -= thread exceptions qt rtti release
 
-VERSION = $$system("git describe --abbrev=0 --tags | \
+VERSION = $$system("git describe --abbrev=0 --tags --always| \
     sed 's/[[:alpha:].]//g; s/^0//g'")
 
 debug = $$[DEBUG]

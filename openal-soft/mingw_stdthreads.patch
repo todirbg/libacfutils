@@ -1,27 +1,22 @@
---- openal-soft-1.21.0/CMakeLists.txt	2020-11-04 10:00:35.000000000 +0000
-+++ openal-soft-1.21.0-new/CMakeLists.txt	2021-01-21 00:50:45.765664718 +0000
-@@ -1203,11 +1203,14 @@
- unset(HAS_ROUTER)
- set(IMPL_TARGET OpenAL) # Either OpenAL or soft_oal.
- 
-+option(MINGW_STDTHREADS_GENERATE_STDHEADERS "" ON)
-+add_subdirectory(mingw_stdthreads)
-+
- # Build main library
+diff --git a/CMakeLists.txt b/CMakeLists_mingw.txt
+index 9773e00..0acccbe 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists_mingw.txt
+@@ -1322,7 +1322,7 @@ set(IMPL_TARGET OpenAL) # Either OpenAL or soft_oal.
  if(LIBTYPE STREQUAL "STATIC")
-     add_library(${IMPL_TARGET} STATIC ${COMMON_OBJS} ${OPENAL_OBJS} ${ALC_OBJS})
+     add_library(${IMPL_TARGET} STATIC ${COMMON_OBJS} ${OPENAL_OBJS} ${ALC_OBJS} ${CORE_OBJS})
      target_compile_definitions(${IMPL_TARGET} PUBLIC AL_LIBTYPE_STATIC)
 -    target_link_libraries(${IMPL_TARGET} PRIVATE ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB})
 +    target_link_libraries(${IMPL_TARGET} PRIVATE ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB} mingw_stdthreads)
+ 
      if(WIN32)
          # This option is for static linking OpenAL Soft into another project
-         # that already defines the IDs. It is up to that project to ensure all
-@@ -1259,7 +1262,7 @@
+@@ -1378,7 +1378,7 @@ else()
      if(WIN32)
          set_target_properties(${IMPL_TARGET} PROPERTIES PREFIX "")
      endif()
 -    target_link_libraries(${IMPL_TARGET} PRIVATE common ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB})
 +    target_link_libraries(${IMPL_TARGET} PRIVATE common ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB} mingw_stdthreads)
  
-     if(APPLE AND ALSOFT_OSX_FRAMEWORK)
-         # Sets framework name to soft_oal to avoid ambiguity with the system OpenAL.framework
+     if(NOT WIN32 AND NOT APPLE)
+         # FIXME: This doesn't put a dependency on the version script. Changing

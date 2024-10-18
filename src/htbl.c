@@ -153,7 +153,7 @@ htbl2_create(htbl2_t REQ_PTR(htbl), size_t tbl_sz, size_t key_sz,
 void
 htbl_destroy(htbl_t REQ_PTR(htbl))
 {
-	ASSERT(htbl != NULL);
+	//ASSERT(htbl != NULL);
 	ASSERT(htbl->num_values == 0);
 	ASSERT(htbl->buckets != NULL);
 	for (size_t i = 0; i < htbl->tbl_sz; i++)
@@ -340,7 +340,7 @@ htbl2_set(htbl2_t REQ_PTR(htbl), const void *key, size_t key_sz,
 void
 htbl_remove(htbl_t REQ_PTR(htbl), const void *key, bool_t nil_ok)
 {
-	ASSERT(htbl != NULL);
+	//ASSERT(htbl != NULL);
 	ASSERT(key != NULL);
 
 	list_t *bucket = &htbl->buckets[H(key, htbl->key_sz) &
@@ -402,7 +402,7 @@ void
 htbl_remove_multi(htbl_t REQ_PTR(htbl), const void *key,
     htbl_multi_value_t *list_item)
 {
-	ASSERT(htbl != NULL);
+	//ASSERT(htbl != NULL);
 	ASSERT(htbl->multi_value);
 	ASSERT(htbl->num_values != 0);
 	ASSERT(list_item != NULL);

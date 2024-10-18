@@ -78,7 +78,7 @@ if [[ "$LINUXONLY" == 0 ]]; then
 		exit
 	fi
 	if [[ "$DLL" = 1 ]]; then
-		VERSION="$(git describe --abbrev=0 --tags | \
+		VERSION="$(git describe --abbrev=0 --tags --always | \
 		    sed 's/[[:alpha:].]//g; s/^0//g')"
 		mv "$RELEASE/acfutils$VERSION.dll" \
 		    "$RELEASE/libacfutils$VERSION.a" "win64" || exit 1
