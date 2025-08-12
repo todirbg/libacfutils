@@ -791,13 +791,9 @@ normalize_name(iconv_t *cd_p, char *str_in, char *str_out, size_t cap)
 	size_t conv_in_sz = strlen(str_in);
 	size_t conv_out_sz = l;
 
-        #ifdef WIN32
-        const char *conv_in = str_in;
-	iconv(*cd_p, &conv_in, &conv_in_sz, &conv_out, &conv_out_sz);
-	#else
         char *conv_in = str_in;
-	iconv(*cd_p, &conv_in, &conv_in_sz, &conv_out, &conv_out_sz);	
-	#endif
+	iconv(*cd_p, &conv_in, &conv_in_sz, &conv_out, &conv_out_sz);
+
 	for (size_t i = 0, j = 0; str_conv[i] != '\0' && j + 1 < cap; i++) {
 		if (str_conv[i] != '\'' && str_conv[i] != '`' &&
 		    str_conv[i] != '^' && str_conv[i] != '\\' &&

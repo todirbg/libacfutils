@@ -114,7 +114,7 @@ win32 {
 
 	QMAKE_CFLAGS += -Wno-misleading-indentation
 	QMAKE_DEL_FILE = rm -f
-	LIBS += -static-libgcc
+	LIBS += -static-libgcc -lbcrypt
 	contains(dll, 1) {
 		CONFIG -= staticlib
 		CONFIG += dll
