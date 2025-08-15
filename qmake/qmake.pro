@@ -39,7 +39,7 @@ QMAKE_CFLAGS += -std=c11 -g -W -Wall -Wextra -Werror=vla -fvisibility=hidden
 contains(noerrors, 0) {
 	QMAKE_CFLAGS += -Werror
 }
-QMAKE_CFLAGS += -Wunused-result
+QMAKE_CFLAGS += -Wunused-result -fno-objc-msgsend-selector-stubs
 !macx {
 	QMAKE_CFLAGS += -Wno-format-truncation -Wno-cast-function-type
 	QMAKE_CFLAGS += -Wno-stringop-overflow -Wno-missing-field-initializers
