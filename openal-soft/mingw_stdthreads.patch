@@ -2,21 +2,23 @@ diff --git a/CMakeLists.txt b/CMakeLists_mingw.txt
 index 9773e00..0acccbe 100644
 --- a/CMakeLists.txt
 +++ b/CMakeLists_mingw.txt
-@@ -1322,7 +1322,7 @@ set(IMPL_TARGET OpenAL) # Either OpenAL or soft_oal.
+@@ -1429,5 +1429,5 @@ # Build main library
  if(LIBTYPE STREQUAL "STATIC")
      add_library(${IMPL_TARGET} STATIC ${COMMON_OBJS} ${OPENAL_OBJS} ${ALC_OBJS} ${CORE_OBJS})
      target_compile_definitions(${IMPL_TARGET} PUBLIC AL_LIBTYPE_STATIC)
--    target_link_libraries(${IMPL_TARGET} PRIVATE ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB})
-+    target_link_libraries(${IMPL_TARGET} PRIVATE ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB} mingw_stdthreads)
- 
+-    target_link_libraries(${IMPL_TARGET} PRIVATE ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB}
++    target_link_libraries(${IMPL_TARGET} PRIVATE ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB} mingw_stdthreads
+         $<BUILD_LOCAL_INTERFACE:alsoft::fmt>)
+         
      if(WIN32)
-         # This option is for static linking OpenAL Soft into another project
-@@ -1378,7 +1378,7 @@ else()
+         # This option is for static linking OpenAL Soft into another project      
+@@ -1486,5 +1486,5 @@ ${TARGET_PUBLIC_HEADERS})
      if(WIN32)
          set_target_properties(${IMPL_TARGET} PROPERTIES PREFIX "")
      endif()
--    target_link_libraries(${IMPL_TARGET} PRIVATE common ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB})
-+    target_link_libraries(${IMPL_TARGET} PRIVATE common ${LINKER_FLAGS} ${EXTRA_LIBS} ${MATH_LIB} mingw_stdthreads)
- 
-     if(NOT WIN32 AND NOT APPLE)
-         # FIXME: This doesn't put a dependency on the version script. Changing
+-    target_link_libraries(${IMPL_TARGET} PRIVATE alsoft.common ${LINKER_FLAGS} ${EXTRA_LIBS}
++    target_link_libraries(${IMPL_TARGET} PRIVATE alsoft.common ${LINKER_FLAGS} ${EXTRA_LIBS} mingw_stdthreads
+        ${MATH_LIB} alsoft::fmt)
+
+     if(ALSOFT_UWP)
+         find_package(cppwinrt CONFIG)

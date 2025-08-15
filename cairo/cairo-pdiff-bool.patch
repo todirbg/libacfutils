@@ -1,0 +1,11 @@
+--- cairo-1.17.6/test/pdiff/pdiff.h	2025-08-15 11:05:13.959865660 +0300
++++ cairo-1.17.6/test/pdiff/pdiff_patch.h	2025-08-15 11:05:27.401171686 +0300
+@@ -19,7 +19,7 @@
+ 
+ #include <cairo.h>
+ 
+-typedef int bool;
++#include <stdbool.h>
+ #ifndef true
+ #define true 1
+ #endif

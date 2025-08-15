@@ -38,7 +38,7 @@ GLEWMX=1
 WHOLE_ARCH_ON=""
 WHOLE_ARCH_OFF=""
 LINK_ACFUTILS=1
-OPENAL_VERSION="1.23.1"
+OPENAL_VERSION="1.24.3"
 
 cd "$(dirname "$0")"
 
@@ -164,9 +164,9 @@ PKG_CONFIG_PATH="\
 $(pwd)/opus/opusfile-$ARCH/lib/pkgconfig:\
 $(pwd)/opus/opus-$ARCH/lib/pkgconfig:\
 $(pwd)/opus/libogg-$ARCH/install/lib/pkgconfig:\
+$(pwd)/zlib/zlib-$ARCH/lib/pkgconfig:\
 $(pwd)/freetype/freetype-$ARCH/lib/pkgconfig:\
 $(pwd)/libpng/libpng-$ARCH/lib/pkgconfig:\
-$(pwd)/zlib/zlib-$ARCH/lib/pkgconfig:\
 $(pwd)/cairo/cairo-$ARCH/lib/pkgconfig:\
 $(pwd)/cairo/pixman-$ARCH/lib/pkgconfig:\
 $(pwd)/curl/libcurl-$ARCH/lib/pkgconfig:\

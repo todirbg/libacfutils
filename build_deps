@@ -191,8 +191,8 @@ esac
     ( echo "Building libxml2 ..."; cd libxml2 && ./build_libxml2_deps ) && \
     ( [ $build_freetype -ne 1 ] || ( echo "Building Freetype ..."; \
     cd freetype && ./build_freetype_deps ) ) && \
-    ( [ $build_cairo -ne 1 ] || ( echo "Building Cairo ..."; \
-    cd cairo && ./build_cairo_deps ) ) && \
+    #( [ $build_cairo -ne 1 ] || ( echo "Building Cairo ..."; \
+    #cd cairo && ./build_cairo_deps ) ) && \
     ( [ $build_opus -ne 1 ] || ( echo "Building Opus ..."; \
     cd opus && ./build_opus_deps ) ) && \
     ( echo "Building OpenSSL ..."; cd ssl && ./build_ssl_deps ) && \

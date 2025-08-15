@@ -1,0 +1,15 @@
+--- cairo-1.17.6/util/cairo-trace/lookup-symbol.c	2025-08-15 10:54:23.739361926 +0300
++++ cairo-1.17.6/util/cairo-trace/lookup-symbol_patch.c	2025-08-15 10:52:28.367628316 +0300
+@@ -106,10 +106,10 @@
+     if (! bfd_check_format_matches (symtab->bfd, bfd_object, &matching))
+ 	goto BAIL;
+ 
+-    symcount = bfd_read_minisymbols (symtab->bfd, false, (PTR) &symtab->syms, &size);
++    symcount = bfd_read_minisymbols (symtab->bfd, false, (void **) &symtab->syms, &size);
+     if (symcount == 0) {
+ 	symcount = bfd_read_minisymbols (symtab->bfd, true /* dynamic */ ,
+-		(PTR) &symtab->syms, &size);
++		(void **) &symtab->syms, &size);
+     }
+     if (symcount < 0)
+ 	goto BAIL;

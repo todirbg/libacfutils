@@ -668,7 +668,7 @@ void discard_char(struct lexer_state *ls)
 static int utf8_to_string(unsigned char buf[], unsigned long utf8)
 {
 	unsigned long val = 0;
-	static char hex[16] = "0123456789abcdef";
+	static char hex[17] = "0123456789abcdef";
 
 	if (utf8 & 0x80UL) {
 		unsigned long x1, x2, x3, x4;
